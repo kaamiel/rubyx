@@ -7,9 +7,9 @@ module Mains
 
     def setup
       @qemu = ENV["QEMU_ARM"] || "qemu-arm"
-      @linker = ENV["ARM_LINKER"] || "arm-linux-gnu-ld"  #on fedora
-      @arm = ENV["TEST_ARM"] or ENV["TEST_ALL"]
-      #@linker = "arm-linux-gnueabi-ld"  # on ubuntu
+      # @linker = ENV["ARM_LINKER"] || "arm-linux-gnu-ld"  #on fedora
+      @arm = ENV["TEST_ARM"] || ENV["TEST_ALL"]
+      @linker = "arm-linux-gnueabi-ld"  # on ubuntu
       # ENV["TEST_ARM"] = "DEBUG"
     end
 

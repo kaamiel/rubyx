@@ -42,7 +42,7 @@ module Risc
     def check_positions(objects)
       objects.each_slice(2) do |l,r|
         next unless r
-        next if l.is_a?(Label) or r.is_a?(Label)
+        next if l.is_a?(Label) || r.is_a?(Label)
         #assert Position.get(l).at < Position.get(r).at , "#{Position.get(l)} < #{Position.get(r)} , #{l.object_id.to_s(16)}, #{r.object_id.to_s(16)}, #{l.class}, #{r.class}"
       end
     end

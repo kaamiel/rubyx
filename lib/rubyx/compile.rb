@@ -17,7 +17,7 @@ class RubyXC < Thor
 
     outfile = file.split("/").last.gsub(".rb" , ".o")
     writer.save outfile
-    system "arm-linux-gnu-ld -N #{outfile}"
+    system "arm-linux-gnueabi-ld -N #{outfile}"
     File.delete outfile
     return outfile
   end
