@@ -2,7 +2,7 @@ module Ruby
   class ClassMethodStatement < MethodStatement
 
     def to_sol
-      body = normalized_body
+      body = normalized_body(@body)
       Sol::ClassMethodExpression.new( @name , @args.dup , body.to_sol)
     end
 

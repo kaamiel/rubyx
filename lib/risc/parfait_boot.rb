@@ -123,6 +123,7 @@ module Parfait
       Message: { next_message: :Message,   receiver: :Object, frame: :Object ,
                  return_address: :Integer, return_value: :Object,
                  caller: :Message , method: :CallableMethod ,
+                 exc_return_address: :Integer, exc_handler: :Message,
                  arguments_given: :Integer ,
                  arg1: :Object , arg2: :Object, arg3: :Object,
                  arg4: :Object,  arg5: :Object, arg6: :Object,

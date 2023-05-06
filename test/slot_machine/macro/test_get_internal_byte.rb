@@ -22,7 +22,7 @@ module SlotMachine
       end
       def test_all
         assert_slot_to_reg 22 ,:message , 2 , "message.receiver"
-        assert_slot_to_reg 23 ,:message , 9 , "message.arg1"
+        assert_slot_to_reg 23 ,:message , 11 , "message.arg1"
         assert_slot_to_reg 24 ,"message.arg1" , 2 , "message.arg1.data_1"
 
         assert_equal Risc::ByteToReg , risc(25).class

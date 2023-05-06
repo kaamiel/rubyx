@@ -9,7 +9,7 @@ module SlotMachine
       assert_equal 4 , all.length , all_str
     end
     def test_1_slot
-      assert_slot_to_reg 1 ,:message , 9 , :"message.arg1"
+      assert_slot_to_reg 1 ,:message , 11 , :"message.arg1"
     end
     def test_2_slot
       assert_slot_to_reg 2 ,:message , 1 , :"message.next_message"

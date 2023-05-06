@@ -45,7 +45,7 @@ module Risc
       assert_slot_to_reg base+3 ,:r1 , 6 , :r2
     end
     def test_block_reg
-      assert_reg_to_slot base+4 ,:r0 , :r2 , 16
+      assert_reg_to_slot base+4 ,:r0 , :r2 , 18
     end
     def test_ret_load
       assert_load base+5 , Parfait::Integer , :r0

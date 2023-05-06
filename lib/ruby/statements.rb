@@ -45,7 +45,7 @@ module Ruby
     end
 
     def to_s(depth = 0)
-      at_depth(depth , @statements.collect{|st| st.to_s(depth)}.join("\n"))
+      at_depth(depth , @statements.collect{|st| st.to_s(0)}.join("\n"))
     end
 
   end

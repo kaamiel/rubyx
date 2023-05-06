@@ -17,9 +17,9 @@ module SlotMachine
         assert_equal 18 , @method.to_risc.risc_instructions.length
       end
       def test_all
-        assert_slot_to_reg 1 ,:message , 9 , "message.arg1"
+        assert_slot_to_reg 1 ,:message , 11 , "message.arg1"
         assert_slot_to_reg 2 ,"message.arg1" , 2 , "message.arg1.data_1"
-        assert_slot_to_reg 3 ,:message , 10 , "message.arg2"
+        assert_slot_to_reg 3 ,:message , 12 , "message.arg2"
         assert_slot_to_reg 4 ,:message , 2 , "message.receiver"
         assert_reg_to_slot 5 , "message.arg2" , "message.receiver" , :"message.arg1.data_1"
         assert_reg_to_slot 6 , "message.arg2" , :message , 5
