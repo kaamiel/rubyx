@@ -8,7 +8,7 @@ module Ruby
     end
 
     def to_sol
-      sol_brother.new(@body.to_sol, @rescue_bodies.map(&:to_sol))
+      sol_brother.new(@body&.to_sol, @rescue_bodies.map(&:to_sol))
     end
 
     def to_s(depth = 0)

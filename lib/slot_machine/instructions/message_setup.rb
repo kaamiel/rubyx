@@ -21,15 +21,17 @@ module SlotMachine
   class MessageSetup < Instruction
     attr_reader :method_source
 
-    def initialize(method_source)
+    def initialize(method_source, exception_return_label = nil)
       raise "no nil source" unless method_source
       @method_source = method_source
+      @exception_return_label = exception_return_label
     end
 
     # Move method name, frame and arguemnt types from the method to the next_message
     # Get the message from Space and link it.
     def to_risc(compiler)
       build_with(compiler.builder(self))
+      setup_exception_return(compiler)
     end
 
     # directly called by to_risc
@@ -57,6 +59,21 @@ module SlotMachine
     # set the method into the message
     def build_message_data( builder , callable)
       builder.message[:next_message][:method] << callable
+    end
+
+    def setup_exception_return(compiler)
+      if @exception_return_label
+        exception_return_address = compiler.load_object(@exception_return_label.risc_label(compiler))
+      end
+      compiler.build(self) do
+        if exception_return_address
+          message[:next_message][:exc_return_address] << exception_return_address
+          message[:next_message][:exc_handler] << message
+        else
+          message[:next_message][:exc_return_address] << message[:exc_return_address]
+          message[:next_message][:exc_handler] << message[:exc_handler]
+        end
+      end
     end
   end
 end

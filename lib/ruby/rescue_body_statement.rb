@@ -7,7 +7,7 @@ module Ruby
     end
 
     def to_sol
-      sol_brother.new(@exception_classes.map(&:to_sol), @assignment.to_sol, @body.to_sol)
+      sol_brother.new(@exception_classes.map(&:to_sol), @assignment&.to_sol, @body&.to_sol)
     end
 
     def to_s(depth = 0)

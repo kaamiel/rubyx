@@ -1,5 +1,7 @@
 module Sol
   class RescueBodyStatement < Statement
+    attr_reader :exception_classes
+
     def initialize(exception_classes, assignment, body)
       @exception_classes = exception_classes
       @assignment = assignment
@@ -7,7 +9,12 @@ module Sol
     end
 
     def to_slot(compiler)
-      # todo
+      [@assignment&.to_slot(compiler), @body&.to_slot(compiler)].compact.reduce(:<<)
+    end
+
+    def each(&block)
+      block.call(@assignment)
+      @body&.each(&block)
     end
 
     def to_s(depth = 0)
