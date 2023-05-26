@@ -12,21 +12,22 @@ module Risc
 
     def test_chain
       #show_main_ticks # get output of what is
-      check_main_chain [LoadConstant, SlotToReg, RegToSlot, LoadConstant, SlotToReg, #5
-                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, SlotToReg, #10
-                 FunctionCall, LoadConstant, LoadConstant, SlotToReg, OperatorInstruction, #15
-                 IsNotZero, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #20
-                 LoadData, OperatorInstruction, RegToSlot, RegToSlot, SlotToReg, #25
-                 RegToSlot, Branch, SlotToReg, Branch, SlotToReg, #30
-                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, SlotToReg, #35
-                 RegToSlot, Branch, SlotToReg, SlotToReg, RegToSlot, #40
-                 SlotToReg, SlotToReg, FunctionReturn, Transfer, SlotToReg, #45
-                 SlotToReg, Transfer, Syscall, NilClass,] #50
+      check_main_chain [LoadConstant, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #5
+                 RegToSlot, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #10
+                 SlotToReg, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #15
+                 SlotToReg, FunctionCall, LoadConstant, LoadConstant, SlotToReg, #20
+                 OperatorInstruction, IsNotZero, SlotToReg, RegToSlot, SlotToReg, #25
+                 SlotToReg, LoadData, OperatorInstruction, RegToSlot, RegToSlot, #30
+                 SlotToReg, RegToSlot, Branch, SlotToReg, Branch, #35
+                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #40
+                 SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #45
+                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, Transfer, #50
+                 SlotToReg, SlotToReg, Transfer, Syscall, NilClass,] #55
        assert_equal 2 , get_return
     end
 
     def test_op
-      assert_operator 22 , :>>,  :r1 , :r0 , :r3
+      assert_operator 28 , :>>,  :r1 , :r0 , :r3
       assert_equal 2 , @interpreter.get_register(:r0)
       assert_equal 9 , @interpreter.get_register(:r1)
     end

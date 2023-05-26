@@ -54,7 +54,7 @@ module Parfait
 
     # private
     def set_type(typ)
-      raise "not type" + typ.class.to_s + "in " + object_id.to_s(16) unless typ.is_a?(Type)
+      raise "not type " + typ.class.to_s unless typ.is_a?(Type)
       @type = typ
     end
 
@@ -64,7 +64,7 @@ module Parfait
     end
 
     def get_type()
-      raise "No type " + self.object_id.to_s(16) + " : " + self.class.name+" : " + self.to_s unless @type
+      raise "No type: " + self.class.name + " : " + self.to_s unless @type
       @type
     end
 

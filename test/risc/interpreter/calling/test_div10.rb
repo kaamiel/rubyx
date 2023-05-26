@@ -12,32 +12,33 @@ module Risc
 
     def test_chain
       # show_main_ticks # get output of what is
-      check_main_chain  [LoadConstant, SlotToReg, RegToSlot, LoadConstant, SlotToReg, #5
-                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, SlotToReg, #10
-                 FunctionCall, LoadConstant, LoadConstant, SlotToReg, OperatorInstruction, #15
-                 IsNotZero, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #20
-                 Transfer, Transfer, LoadData, OperatorInstruction, LoadData, #25
-                 OperatorInstruction, OperatorInstruction, LoadData, Branch, Transfer, #30
-                 OperatorInstruction, OperatorInstruction, LoadData, Transfer, OperatorInstruction, #35
-                 OperatorInstruction, LoadData, Transfer, OperatorInstruction, OperatorInstruction, #40
-                 LoadData, OperatorInstruction, LoadData, Transfer, OperatorInstruction, #45
-                 OperatorInstruction, Transfer, LoadData, OperatorInstruction, LoadData, #50
-                 OperatorInstruction, OperatorInstruction, RegToSlot, RegToSlot, SlotToReg, #55
-                 RegToSlot, Branch, SlotToReg, Branch, SlotToReg, #60
-                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, SlotToReg, #65
-                 RegToSlot, Branch, SlotToReg, SlotToReg, RegToSlot, #70
-                 SlotToReg, SlotToReg, FunctionReturn, Transfer, SlotToReg, #75
-                 SlotToReg, Transfer, Syscall, NilClass,] #80
+      check_main_chain  [LoadConstant, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #5
+                 RegToSlot, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #10
+                 SlotToReg, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #15
+                 SlotToReg, FunctionCall, LoadConstant, LoadConstant, SlotToReg, #20
+                 OperatorInstruction, IsNotZero, SlotToReg, RegToSlot, SlotToReg, #25
+                 SlotToReg, Transfer, Transfer, LoadData, OperatorInstruction, #30
+                 LoadData, OperatorInstruction, OperatorInstruction, LoadData, Branch, #35
+                 Transfer, OperatorInstruction, OperatorInstruction, LoadData, Transfer, #40
+                 OperatorInstruction, OperatorInstruction, LoadData, Transfer, OperatorInstruction, #45
+                 OperatorInstruction, LoadData, OperatorInstruction, LoadData, Transfer, #50
+                 OperatorInstruction, OperatorInstruction, Transfer, LoadData, OperatorInstruction, #55
+                 LoadData, OperatorInstruction, OperatorInstruction, RegToSlot, RegToSlot, #60
+                 SlotToReg, RegToSlot, Branch, SlotToReg, Branch, #65
+                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #70
+                 SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #75
+                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, Transfer, #80
+                 SlotToReg, SlotToReg, Transfer, Syscall, NilClass,] #85
        assert_equal 2 , get_return
     end
 
     def test_load_25
-      load_ins = main_ticks 4
+      load_ins = main_ticks 10
       assert_equal LoadConstant ,  load_ins.class
       assert_equal 25 , @interpreter.get_register(load_ins.register).value
     end
     def test_return_class
-      ret = risc(73)
+      ret = risc(79)
       assert_equal FunctionReturn ,  ret.class
       link = @interpreter.get_register( ret.register )
       assert_equal Parfait::ReturnAddress , link.class

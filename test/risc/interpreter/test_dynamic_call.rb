@@ -18,16 +18,17 @@ module Risc
                  SlotToReg, LoadConstant, OperatorInstruction, IsZero, SlotToReg, #20
                  OperatorInstruction, IsZero, RegToSlot, LoadConstant, Branch, #25
                  SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #30
-                 RegToSlot, LoadConstant, SlotToReg, LoadConstant, SlotToReg, #35
-                 RegToSlot, SlotToReg, DynamicJump, LoadConstant, LoadConstant, #40
-                 SlotToReg, OperatorInstruction, IsNotZero, SlotToReg, RegToSlot, #45
-                 SlotToReg, SlotToReg, LoadData, OperatorInstruction, RegToSlot, #50
-                 RegToSlot, SlotToReg, RegToSlot, Branch, SlotToReg, #55
-                 Branch, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #60
-                 FunctionReturn, SlotToReg, RegToSlot, Branch, SlotToReg, #65
-                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #70
-                 Transfer, SlotToReg, SlotToReg, Transfer, Syscall, #75
-                 NilClass,] #80
+                 RegToSlot, SlotToReg, SlotToReg, RegToSlot, SlotToReg, #35
+                 SlotToReg, RegToSlot, LoadConstant, SlotToReg, LoadConstant, #40
+                 SlotToReg, RegToSlot, SlotToReg, DynamicJump, LoadConstant, #45
+                 LoadConstant, SlotToReg, OperatorInstruction, IsNotZero, SlotToReg, #50
+                 RegToSlot, SlotToReg, SlotToReg, LoadData, OperatorInstruction, #55
+                 RegToSlot, RegToSlot, SlotToReg, RegToSlot, Branch, #60
+                 SlotToReg, Branch, SlotToReg, RegToSlot, SlotToReg, #65
+                 SlotToReg, FunctionReturn, SlotToReg, RegToSlot, Branch, #70
+                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #75
+                 FunctionReturn, Transfer, SlotToReg, SlotToReg, Transfer, #80
+                 Syscall, NilClass,] #85
        assert_equal ::Integer , get_return.class
        assert_equal 1 , get_return
     end
@@ -37,7 +38,7 @@ module Risc
       assert_equal  Parfait::CacheEntry , call_ins.constant.class
     end
     def test_dyn
-      cal = main_ticks(38)
+      cal = main_ticks(44)
       assert_equal DynamicJump ,  cal.class
     end
   end
