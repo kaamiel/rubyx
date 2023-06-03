@@ -42,7 +42,7 @@ module SlotMachine
 
     # Append another SlotMachineCompilers method_compilers to this one.
     def append(collection)
-      @method_compilers.add_method_compiler( collection.method_compilers)
+      @method_compilers.add_method_compiler( collection.method_compilers) if collection.method_compilers
       self
     end
 

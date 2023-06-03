@@ -65,7 +65,7 @@ module SlotMachine
     end
 
     def remove_exception_return_label
-      raise 'no exception return labels' unless @exception_return_labels.pop
+      @exception_return_labels.pop
     end
 
     # return the frame type, ie the blocks self_type

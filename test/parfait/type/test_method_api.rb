@@ -39,7 +39,7 @@ module Parfait
       assert @try_type.remove_method(:foo)
     end
     def test_remove_not_there
-      assert_raises RuntimeError do
+      assert_raises ::RuntimeError do
          @try_type.remove_method(:foo)
       end
     end

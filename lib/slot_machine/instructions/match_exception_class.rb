@@ -1,22 +1,34 @@
 module SlotMachine
   class MatchExceptionClass < Instruction
-    def initialize(source, exception_classes, next_rescue_body_label)
+    def initialize(source, exception_class_to_match, matched_label: nil, not_matched_label: nil)
       super(source)
-      @exception_classes = exception_classes
-      @next_rescue_body_label = next_rescue_body_label
+      @exception_class_to_match = exception_class_to_match
+      @matched_label = matched_label
+      @not_matched_label = not_matched_label
     end
 
     def to_risc(compiler)
-      # todo
-      label = Risc.label(self, "match_exception_class_#{object_id.to_s(16)}")
-
-      compiler.build(to_s) do
-        add_code label
-      end
+      exception_object_class = SlotMachine::Slotted.for(:message, [:return_value])
+      expected_exception_class = Parfait.object_space.get_class_by_name(expected_exception_class_name)
+      IsKindOf.new(exception_object_class, expected_exception_class,
+                   true_label: @matched_label, false_label: @not_matched_label).to_risc(compiler)
     end
 
     def to_s
-      'MatchExceptionClass'
+      "MatchExceptionClass #{expected_exception_class_name}"
+    end
+
+    private
+
+    def expected_exception_class_name
+      case @exception_class_to_match
+      when Symbol
+        @exception_class_to_match
+      when Sol::ModuleName
+        @exception_class_to_match.name
+      else
+        raise "Not implemented #{@exception_class_to_match}:#{@exception_class_to_match.class}"
+      end
     end
   end
 end

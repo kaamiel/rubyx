@@ -17,12 +17,12 @@ module Parfait
       assert_equal 0 , @word.char_length
     end
     def test_index_check_get
-      assert_raises RuntimeError do
+      assert_raises ::RuntimeError do
         @word.get_char(0)
       end
     end
     def test_index_check_set
-      assert_raises RuntimeError do
+      assert_raises ::RuntimeError do
         @word.set_char(1 , 32)
       end
     end

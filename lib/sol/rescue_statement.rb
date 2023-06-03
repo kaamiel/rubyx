@@ -41,17 +41,34 @@ module Sol
       instructions = rescue_body_label
       @rescue_bodies.each_with_index do |rescue_body, index|
         rescue_body_label = SlotMachine::Label.new(self, "handle_exception_#{object_id.to_s(16)}_rescue_#{index + 2}")
-        instructions << SlotMachine::MatchExceptionClass.new(self, rescue_body.exception_classes, rescue_body_label)
+        matched_label = SlotMachine::Label.new(self, "handle_exception_#{object_id.to_s(16)}_rescue_#{index + 1}_matched")
+
+        instructions << match_exception_classes(rescue_body.exception_classes, matched_label, rescue_body_label)
+        instructions << matched_label if rescue_body.exception_classes.length > 1
         instructions << rescue_body.to_slot(compiler)
         instructions << SlotMachine::Jump.new(after_label)
         instructions << rescue_body_label
       end
-      instructions << exception_class_not_matched
+      instructions << exception_class_not_matched(compiler)
     end
 
-    def exception_class_not_matched
-      # todo
-      SlotMachine::Label.new(self, "handle_exception_#{object_id.to_s(16)}_exception_class_not_matched")
+    def match_exception_classes(exception_classes_to_match, matched_label, not_matched_label)
+      instructions = exception_classes_to_match[..-2].map do |exception_class_to_match|
+        SlotMachine::MatchExceptionClass.new(self, exception_class_to_match, matched_label: matched_label)
+      end
+      last_exception_class_to_match = exception_classes_to_match[-1] || :StandardError
+      instructions << SlotMachine::MatchExceptionClass.new(self, last_exception_class_to_match,
+                                                           not_matched_label: not_matched_label)
+      instructions.reduce(:<<)
+    end
+
+    def exception_class_not_matched(compiler)
+      previous_exception_return_label = compiler.remove_exception_return_label
+      if previous_exception_return_label
+        SlotMachine::Jump.new(previous_exception_return_label)
+      else
+        SlotMachine::Raise.new(self, :return_value)
+      end
     end
   end
 end

@@ -37,7 +37,7 @@ module Arm
       assert_code code , :swi , [0x05,0x00,0x00,0xef]#ef 00 00 05
     end
     def test_swi_neg
-      assert_raises(RuntimeError) do
+      assert_raises(::RuntimeError) do
         assert_code @machine.swi("0x05") , :swi , [0x05,0x00,0x00,0xef]
       end
     end

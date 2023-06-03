@@ -7,7 +7,7 @@ module Parfait
       [:Behaviour ,:BinaryCode,:Block,:CacheEntry,:Callable,:CallableMethod,:Class,
         :DataObject,:Data4,:Data8,:Data16,:Data32,:Dictionary,:Factory, :Integer,:FalseClass,
         :List,:Message, :SingletonClass,:NilClass,:Object,:ReturnAddress,
-        :Space,:TrueClass,:Type,:SolMethod,:Word]
+        :Space,:TrueClass,:Type,:SolMethod,:Word,:Exception,:StandardError,:RuntimeError]
     end
 
     def test_space_length

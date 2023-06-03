@@ -14,7 +14,9 @@ module SlotMachine
     def to_risc(compiler)
       compiler.add_code Risc::Branch.new(self , @label.risc_label(compiler))
     end
+
+    def to_s
+      "Jump to #{label}"
+    end
   end
-
-
 end
