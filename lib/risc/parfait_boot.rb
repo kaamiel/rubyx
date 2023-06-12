@@ -92,7 +92,8 @@ module Parfait
       SingletonClass: :Behaviour,
       ReturnAddress: :Integer,
       StandardError: :Exception,
-      RuntimeError: :StandardError
+      RuntimeError: :StandardError,
+      TypeError: :StandardError
     }
     h.default = :Object
     h
@@ -155,6 +156,7 @@ module Parfait
       Exception: {},
       StandardError: {},
       RuntimeError: {},
+      TypeError: {}
     }
   end
 

@@ -32,9 +32,17 @@ module Ruby
         return Statements.new([statement , ret])
       when ReturnStatement , IfStatement , WhileStatement ,RubyBlockStatement
         return statement
+      when ScopeStatement
+        return normalized_body(statement)
       when RescueStatement
-        return statement unless statement.body
-        return RescueStatement.new(normalized_body(statement.body), statement.rescue_bodies)
+        return ReturnStatement.new(NilConstant.new) unless statement.body
+
+        body = normalized_body(statement.body)
+        rescue_bodies = statement.rescue_bodies.map do |rescue_body|
+          RescueBodyStatement.new(rescue_body.exception_classes, rescue_body.assignment,
+                                  normalized_body(rescue_body.body))
+        end
+        return RescueStatement.new(body, rescue_bodies)
       else
         raise "Not implemented implicit return #{statement.class}"
       end

@@ -15,22 +15,23 @@ module Risc
                  SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #10
                  RegToSlot, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #15
                  SlotToReg, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #20
-                 SlotToReg, FunctionCall, LoadConstant, SlotToReg, OperatorInstruction, #25
-                 IsZero, SlotToReg, SlotToReg, RegToSlot, SlotToReg, #30
+                 LoadConstant, SlotToReg, RegToSlot, SlotToReg, FunctionCall, #25
+                 LoadConstant, SlotToReg, OperatorInstruction, IsZero, SlotToReg, #30
                  SlotToReg, RegToSlot, SlotToReg, SlotToReg, RegToSlot, #35
-                 SlotToReg, SlotToReg, RegToSlot, LoadConstant, SlotToReg, #40
-                 RegToSlot, SlotToReg, SlotToReg, DynamicJump, LoadConstant, #45
-                 SlotToReg, SlotToReg, RegToSlot, LoadConstant, RegToSlot, #50
-                 Branch, SlotToReg, SlotToReg, RegToSlot, SlotToReg, #55
-                 SlotToReg, FunctionReturn, SlotToReg, RegToSlot, Branch, #60
-                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, Branch, #65
-                 SlotToReg, FunctionReturn, SlotToReg, RegToSlot, Branch, #70
-                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, Branch, #75
-                 SlotToReg, FunctionReturn, Transfer, SlotToReg, SlotToReg, #80
-                 Transfer, Syscall, NilClass,] #85
+                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #40
+                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, LoadConstant, #45
+                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, DynamicJump, #50
+                 LoadConstant, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #55
+                 RegToSlot, Branch, SlotToReg, SlotToReg, RegToSlot, #60
+                 SlotToReg, SlotToReg, FunctionReturn, SlotToReg, RegToSlot, #65
+                 Branch, SlotToReg, Branch, SlotToReg, RegToSlot, #70
+                 SlotToReg, SlotToReg, FunctionReturn, SlotToReg, RegToSlot, #75
+                 Branch, SlotToReg, Branch, SlotToReg, RegToSlot, #80
+                 SlotToReg, SlotToReg, FunctionReturn, Transfer, SlotToReg, #85
+                 SlotToReg, Transfer, Syscall, NilClass,] #90
       assert_equal 10 , get_return
     end
-    def base ; 44 ; end
+    def base ; 50 ; end
 
     def test_block_jump
       load_ins = main_ticks(base)

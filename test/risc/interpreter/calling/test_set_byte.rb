@@ -16,18 +16,18 @@ module Risc
                  RegToSlot, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #10
                  SlotToReg, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #15
                  LoadConstant, SlotToReg, RegToSlot, LoadConstant, SlotToReg, #20
-                 RegToSlot, SlotToReg, FunctionCall, SlotToReg, RegToSlot, #25
-                 SlotToReg, SlotToReg, SlotToReg, SlotToReg, SlotToReg, #30
-                 RegToByte, SlotToReg, RegToSlot, Branch, SlotToReg, #35
-                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #40
-                 SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #45
-                 RegToSlot, Branch, SlotToReg, SlotToReg, FunctionReturn, #50
-                 Transfer, SlotToReg, SlotToReg, Transfer, Syscall, #55
-                 NilClass,] #60
+                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, SlotToReg, #25
+                 FunctionCall, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #30
+                 SlotToReg, SlotToReg, SlotToReg, RegToByte, SlotToReg, #35
+                 RegToSlot, Branch, SlotToReg, SlotToReg, RegToSlot, #40
+                 SlotToReg, SlotToReg, FunctionReturn, SlotToReg, RegToSlot, #45
+                 Branch, SlotToReg, SlotToReg, RegToSlot, SlotToReg, #50
+                 SlotToReg, FunctionReturn, Transfer, SlotToReg, SlotToReg, #55
+                 Transfer, Syscall, NilClass,] #60
        assert_equal "K".ord , get_return
     end
     def test_reg_to_byte
-      done = main_ticks(31)
+      done = main_ticks(34)
       assert_equal RegToByte ,  done.class
       assert_equal "K".ord ,  @interpreter.get_register(done.register)
     end

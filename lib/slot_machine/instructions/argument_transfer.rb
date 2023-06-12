@@ -37,7 +37,10 @@ module SlotMachine
     # delegates to SlotLoad for receiver and to the actual args.to_risc
     def to_risc(compiler)
       transfer = SlotLoad.new(self.source ,[:message , :next_message , :receiver] , @receiver, self).to_risc(compiler)
-      #TODO transfer the Number of arguments to :arguments_given (to be checked on entry)
+
+      arguments_given = SlotMachine::Slotted.for(SlotMachine::IntegerConstant.new(@arguments.length))
+      SlotMachine::SlotLoad.new(self.source, [:message, :next_message, :arguments_given], arguments_given).to_risc(compiler)
+
       arg_target = [:message , :next_message ]
       @arguments.each_with_index do |arg , index| # +1 because of type
         load = SlotMachine::SlotLoad.new(self.source, arg_target + ["arg#{index+1}".to_sym] , arg)

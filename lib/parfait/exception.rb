@@ -28,4 +28,14 @@ module Parfait
       'RuntimeError'
     end
   end
+
+  class TypeError < StandardError
+    def initialize
+      super
+    end
+
+    def to_s
+      'TypeError'
+    end
+  end
 end

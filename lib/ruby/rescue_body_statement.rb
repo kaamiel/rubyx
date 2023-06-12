@@ -1,5 +1,7 @@
 module Ruby
   class RescueBodyStatement < Statement
+    attr_reader :exception_classes, :assignment, :body
+
     def initialize(exception_classes, assignment, body)
       @exception_classes = exception_classes
       @assignment = assignment

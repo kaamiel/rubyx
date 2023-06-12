@@ -56,7 +56,7 @@ module Sol
       instructions = exception_classes_to_match[..-2].map do |exception_class_to_match|
         SlotMachine::MatchExceptionClass.new(self, exception_class_to_match, matched_label: matched_label)
       end
-      last_exception_class_to_match = exception_classes_to_match[-1] || :StandardError
+      last_exception_class_to_match = exception_classes_to_match[-1] || :StandardError # rescue with no arguments defaults to StandardError
       instructions << SlotMachine::MatchExceptionClass.new(self, last_exception_class_to_match,
                                                            not_matched_label: not_matched_label)
       instructions.reduce(:<<)
