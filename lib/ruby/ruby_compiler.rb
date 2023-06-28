@@ -151,10 +151,9 @@ module Ruby
     def on_rescue(statement)
       body = process(statement.children[0])
       rescue_bodies = statement.children[1..-2].map { |resbody| process(resbody) }
-      else_body = statement.children[-1]
-      raise "else not implemented #{else_body}" if else_body
+      else_body = process(statement.children[-1])
 
-      RescueStatement.new(body, rescue_bodies)
+      RescueStatement.new(body, rescue_bodies, else_body)
     end
 
     def on_resbody(statement)
