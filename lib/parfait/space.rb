@@ -21,10 +21,11 @@ module Parfait
 
   class Space < Object
 
-    attr_reader  :classes , :types , :factories
-    attr_reader  :true_object , :false_object , :nil_object
+    attr_reader :classes, :types, :factories
+    attr_reader :true_object, :false_object, :nil_object, :current_exception
+
     def self.type_length
-      7
+      8
     end
     def self.memory_size
       8
@@ -121,6 +122,7 @@ module Parfait
       super_class = get_class_by_name(super_class_name)
       type = get_type_by_class_name(super_class_name)
       c = Class.new(name, super_class, type)
+      c.instance_variable_set(:@instance_type, Type.for_hash(type.to_hash, c))
       @classes[name] = c
     end
 

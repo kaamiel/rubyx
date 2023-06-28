@@ -1,6 +1,6 @@
 module SlotMachine
   class Raise < Macro
-    def initialize(source, index = :arg1)
+    def initialize(source, index = nil)
       super(source)
       @index = index
     end
@@ -17,6 +17,8 @@ module SlotMachine
         exception_class = Parfait.object_space.get_class_by_name(:Exception)
         runtime_error_class = Parfait.object_space.get_class_by_name(:RuntimeError)
         type_error_class = Parfait.object_space.get_class_by_name(:TypeError)
+
+        exception_object = builder.allocate_exception
       end
 
       builder.build do
@@ -25,24 +27,30 @@ module SlotMachine
           arguments_given.op :|, arguments_given
           if_zero no_arguments_label
 
-          exception_object_class = Slotted.for(:message, [index])
-          IsKindOf.new(exception_object_class, exception_class, false_label: type_error_label).to_risc(compiler)
+          IsKindOf.new(message[index].to_reg, exception_class, false_label: type_error_label).to_risc(compiler)
 
-          message[:exc_handler][:return_value] << exception_object_class.to_register(compiler, self)
+          space = load_object Parfait.object_space
+          exception_object[:type] << message[index].to_reg.known_type(:Class)[:instance_type]
+          exception_object[:cause] << space[:current_exception]
+          space[:current_exception] << exception_object
           branch merge_label
 
+          # exception class expected
           add_code type_error_label.risc_label(compiler)
           type_error = load_object type_error_class
-          message[:exc_handler][:return_value] << type_error # exception class expected
+          space = load_object Parfait.object_space
+          exception_object[:type] << type_error[:instance_type]
+          exception_object[:cause] << space[:current_exception]
+          space[:current_exception] << exception_object
           branch merge_label
-        else
-          message[:exc_handler][:return_value] << message[index]
-        end
 
-        if validate
+          # raise with no arguments defaults to RuntimeError
           add_code no_arguments_label
           runtime_error = load_object runtime_error_class
-          message[:exc_handler][:return_value] << runtime_error # raise with no arguments defaults to RuntimeError
+          space = load_object Parfait.object_space
+          exception_object[:type] << runtime_error[:instance_type]
+          exception_object[:cause] << space[:current_exception]
+          space[:current_exception] << exception_object
 
           add_code merge_label
         end

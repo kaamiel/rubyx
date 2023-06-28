@@ -145,18 +145,19 @@ module Parfait
       NilClass: {},
       Object: {},
       ReturnAddress: {next_integer: :ReturnAddress},
-      Space: {classes: :Dictionary , types: :Dictionary , factories: :Dictionary,
-              true_object: :TrueClass, false_object: :FalseClass , nil_object: :NilClass},
+      Space: { classes: :Dictionary, types: :Dictionary, factories: :Dictionary,
+               true_object: :TrueClass, false_object: :FalseClass, nil_object: :NilClass,
+               current_exception: :Exception },
       TrueClass: {},
       Type: {names: :List , types: :List  ,
              object_class: :Class, methods: :CallableMethod ,
              is_single: :Object} ,
       SolMethod: { name: :Word , args_type: :Type , frame_type: :Type } ,
       Word: {char_length: :Integer , next_word: :Word} ,
-      Exception: {},
-      StandardError: {},
-      RuntimeError: {},
-      TypeError: {}
+      Exception: { cause: :Exception, next_exception: :Exception },
+      StandardError: { cause: :Exception, next_exception: :Exception },
+      RuntimeError: { cause: :Exception, next_exception: :Exception },
+      TypeError: { cause: :Exception, next_exception: :Exception }
     }
   end
 

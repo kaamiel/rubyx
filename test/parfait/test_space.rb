@@ -11,12 +11,15 @@ module Parfait
     end
 
     def test_space_length
-      assert_equal 7 , @space.get_type.instance_length , @space.get_type.inspect
+      assert_equal 8, @space.get_type.instance_length, @space.get_type.inspect
     end
     def test_singletons
       assert @space.true_object , "No truth"
       assert @space.false_object , "No lies"
       assert @space.nil_object , "No nothing"
+    end
+    def test_current_exception
+      assert_nil @space.current_exception
     end
     def space_class
       Parfait.object_space.get_class_by_name(:Space)
@@ -81,7 +84,7 @@ module Parfait
       assert_equal Dictionary , @space.factories.class
     end
     def test_factory_length
-      assert_equal 3 , @space.factories.length
+      assert_equal 4 , @space.factories.length
     end
     def test_has_integer_factory
       ints = @space.get_factory_for(:Integer)
@@ -118,6 +121,15 @@ module Parfait
     def test_has_next_message
       assert_equal Parfait::Message , @space.get_next_for(:Message).class
     end
+    def test_has_exception_factory
+      ints = @space.get_factory_for(:Exception)
+      assert_equal Factory, ints.class
+      assert_equal :Exception, ints.for_type.class_name
+    end
+    def test_has_next_exception
+      assert_equal Parfait::Exception, @space.get_next_for(:Exception).class
+    end
+
     def test_create_class
       assert @space.create_class( :NewClass )
     end

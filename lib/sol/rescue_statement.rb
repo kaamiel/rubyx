@@ -45,6 +45,7 @@ module Sol
 
         instructions << match_exception_classes(rescue_body.exception_classes, matched_label, rescue_body_label)
         instructions << matched_label if rescue_body.exception_classes.length > 1
+        instructions << restore_previous_exception
         instructions << rescue_body.to_slot(compiler)
         instructions << SlotMachine::Jump.new(after_label)
         instructions << rescue_body_label
@@ -62,12 +63,17 @@ module Sol
       instructions.reduce(:<<)
     end
 
+    def restore_previous_exception
+      SlotMachine::SlotLoad.new(self, [Parfait.object_space, :current_exception],
+                                      [Parfait.object_space, :current_exception, :cause])
+    end
+
     def exception_class_not_matched(compiler)
-      previous_exception_return_label = compiler.remove_exception_return_label
+      previous_exception_return_label = compiler.get_exception_return_label
       if previous_exception_return_label
         SlotMachine::Jump.new(previous_exception_return_label)
       else
-        SlotMachine::Raise.new(self, :return_value)
+        SlotMachine::Raise.new(self)
       end
     end
   end

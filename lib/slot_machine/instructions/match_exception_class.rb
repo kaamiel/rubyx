@@ -8,9 +8,9 @@ module SlotMachine
     end
 
     def to_risc(compiler)
-      exception_object_class = SlotMachine::Slotted.for(:message, [:return_value])
+      exception_object = SlotMachine::Slotted.for(Parfait.object_space, [:current_exception])
       expected_exception_class = Parfait.object_space.get_class_by_name(expected_exception_class_name)
-      IsKindOf.new(exception_object_class, expected_exception_class,
+      IsKindOf.new(exception_object, expected_exception_class,
                    true_label: @matched_label, false_label: @not_matched_label).to_risc(compiler)
     end
 

@@ -41,9 +41,9 @@ module SlotMachine
       if putstring
         SlotMachine::MessageSetup.new(putstring).build_with(builder)
         builder.build do
-          exception_object_class = message[:return_value].to_reg.known_type(:Class)
           message << message[:next_message]
-          message[:receiver] << exception_object_class[:name]
+          space = load_object Parfait.object_space
+          message[:receiver] << space[:current_exception][:type][:object_class][:name]
           message[:return_address] << load_object(exit_label)
           add_code Risc.function_call('__init__ exception putstring', putstring)
         end

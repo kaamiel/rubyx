@@ -9,7 +9,7 @@ module Sol
       return "class Space;def main(arg);return 0; end; end" if(loads == "Space.main")
       raise "no preload #{loads}" unless builtin[loads]
       clazz , meth = loads.split(".")
-      "class #{clazz} #{derive(clazz)}; #{builtin[loads]};end;"
+      "class #{clazz} #{derive(clazz)}; #{builtin[loads]};end\n"
     end
 
     def self.derive(clazz) #must get derived classes rigth, so no mismatch
@@ -26,8 +26,8 @@ module Sol
       {
         "Object.get" => "def get_internal_word(at); X.get_internal_word;end",
         "Object.missing" => "def method_missing(at); X.method_missing(:r1);end",
-        "Object.raise" => "def raise(at); X.raise; end",
-        "Object.self_raise" => "def self.raise(at); X.raise; end",
+        "Object.raise" => "def raise(at); X.raise(:arg1); end",
+        "Object.self_raise" => "def self.raise(at); X.raise(:arg1); end",
         "Object.exit" => "def exit; X.exit;end",
         "Integer.div4" => "def div4; X.div4;end",
         "Integer.div10" => "def div10; X.div10;end",

@@ -23,7 +23,7 @@ module Parfait
       32
     end
     def self.memory_size
-      34
+      32
     end
     def self.args_start_at
       Object.object_space.get_type_by_class_name(:Message).variable_index(:arguments_given)

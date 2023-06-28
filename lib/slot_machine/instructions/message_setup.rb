@@ -19,6 +19,12 @@ module SlotMachine
   # In either case, the method is loaded and name,frame and args set
   #
   class MessageSetup < Instruction
+    # these builtin methods do not raise exceptions
+    NOT_RAISING_METHODS = {
+      Integer: [:<, :>, :>=, :<=, :+, :-, :>>, :<<, :*, :&, :|],
+      Word: [:putstring]
+    }
+
     attr_reader :method_source
 
     def initialize(method_source, exception_return_label = nil)
@@ -62,6 +68,8 @@ module SlotMachine
     end
 
     def setup_exception_return(compiler)
+      return if skip_exception_handling?
+
       if @exception_return_label
         exception_return_address = compiler.load_object(@exception_return_label.risc_label(compiler))
       end
@@ -74,6 +82,14 @@ module SlotMachine
           message[:next_message][:exc_handler] << message[:exc_handler]
         end
       end
+    end
+
+    def skip_exception_handling?
+      return false unless method_source.is_a?(Parfait::CallableMethod)
+
+      class_name = method_source.self_type.object_class.name
+      method_name = method_source.name
+      NOT_RAISING_METHODS[class_name]&.include?(method_name)
     end
   end
 end
