@@ -56,7 +56,7 @@ module Sol
       assert_equal SlotLoad, @ins.next(5).class
       assert_equal :message, @ins.next(5).left.known_object
       assert_equal :message, @ins.next(5).right.known_object
-      assert_equal :return_value, @ins.next(5).left.slots.name
+      assert_equal :caller, @ins.next(5).left.slots.name
       assert_equal :return_value, @ins.next(5).right.slots.name
     end
     def test_return

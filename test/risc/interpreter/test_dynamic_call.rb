@@ -24,12 +24,10 @@ module Risc
                  SlotToReg, DynamicJump, LoadConstant, LoadConstant, SlotToReg, #50
                  OperatorInstruction, IsNotZero, SlotToReg, RegToSlot, SlotToReg, #55
                  SlotToReg, LoadData, OperatorInstruction, RegToSlot, RegToSlot, #60
-                 SlotToReg, RegToSlot, Branch, SlotToReg, Branch, #65
-                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #70
-                 SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #75
-                 RegToSlot, SlotToReg, Branch, SlotToReg, FunctionReturn, #80
-                 Transfer, SlotToReg, SlotToReg, Transfer, Syscall, #85
-                 NilClass,] #90
+                 SlotToReg, SlotToReg, RegToSlot, Branch, SlotToReg, #65
+                 SlotToReg, FunctionReturn, SlotToReg, SlotToReg, RegToSlot, #70
+                 Branch, SlotToReg, SlotToReg, FunctionReturn, Transfer, #75
+                 SlotToReg, SlotToReg, Transfer, Syscall, NilClass,] #80
        assert_equal ::Integer , get_return.class
        assert_equal 1 , get_return
     end

@@ -15,7 +15,7 @@ module SlotMachine
         assert_equal Risc::MethodCompiler , @method.to_risc.class
       end
       def test_risc_length
-        assert_equal 39 , @method.to_risc.risc_instructions.length
+        assert_equal 37 , @method.to_risc.risc_instructions.length
       end
       def test_allocate
         assert_allocate
@@ -29,12 +29,13 @@ module SlotMachine
         assert_transfer a + 5 , :"message.return_value.data_1" , :syscall_1
         assert_syscall a + 6 , :exit
         assert_slot_to_reg a + 7 ,:message , 5 , "message.return_value"
-        assert_reg_to_slot a + 8 , "message.return_value"  , :message , 5
-        assert_branch a + 9 , "return_label"
-        assert_label a + 10 , "return_label"
+        assert_slot_to_reg a + 8 ,:message , 6 , "message.caller"
+        assert_reg_to_slot a + 9 , "message.return_value"  , "message.caller" , 5
+        assert_branch a + 10 , "return_label"
+        assert_label a + 11 , "return_label"
       end
       def test_return
-        assert_return(31)
+        assert_return(32)
       end
     end
   end

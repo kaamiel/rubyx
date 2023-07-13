@@ -166,6 +166,13 @@ module Ruby
       RescueBodyStatement.new(exception_classes, assignment, body)
     end
 
+    def on_ensure(statement)
+      body = process(statement.children[0])
+      ensure_body = process(statement.children[1])
+
+      EnsureStatement.new(body, ensure_body)
+    end
+
     # Array + Hashes
     def on_array expression
       ArrayStatement.new expression.children.collect{ |elem| process(elem) }

@@ -23,7 +23,7 @@ module Sol
       else
         ret = slot_load(compiler)
       end
-      ret << SlotMachine::ReturnJump.new(self , compiler.return_label )
+      ret << SlotMachine::ReturnJump.new(self, compiler.get_return_label)
     end
 
     def to_s(depth = 0)
@@ -31,8 +31,8 @@ module Sol
     end
 
     def slot_load(compiler)
-      SlotMachine::SlotLoad.new( self , [:message , :return_value] ,
-                        @return_value.to_slotted(compiler) )
+      SlotMachine::SlotLoad.new(self, [:message, :caller, :return_value],
+                                      @return_value.to_slotted(compiler))
     end
   end
 end

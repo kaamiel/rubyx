@@ -14,7 +14,7 @@ module Parfait
     end
 
     def test_length
-      assert_equal 31, @types.length
+      assert_equal 32, @types.length
     end
 
     def test_two_hashs_not_equal

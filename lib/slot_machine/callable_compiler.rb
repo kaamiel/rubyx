@@ -16,23 +16,16 @@ module SlotMachine
       @callable = callable
       @constants = []
       @exception_return_labels = []
+      return_label = Label.new(source_name, 'return_label')
+      @return_labels = [return_label]
       @slot_instructions = Label.new(source_name, source_name)
       @current = start = @slot_instructions
-      add_code Label.new( source_name, "return_label")
+      add_code return_label
       add_code SlotMachine::ReturnSequence.new(source_name)
       add_code Label.new( source_name, "unreachable")
       @current = start
     end
     attr_reader :slot_instructions , :constants , :callable , :current
-
-    # find the return_label, every method should have exactly one (see constructor)
-    # used during return sequence code generation
-    def return_label
-      @slot_instructions.each do |ins|
-        next unless ins.is_a?(Label)
-        return ins if ins.name == "return_label"
-      end
-    end
 
     # add a constant (which get created during compilation and need to be linked)
     def add_constant(const)
@@ -54,6 +47,18 @@ module SlotMachine
       @current.insert(instruction) #insert after current
       @current = new_current
       self
+    end
+
+    def get_return_label
+      @return_labels.last
+    end
+
+    def add_return_label(label)
+      @return_labels << label
+    end
+
+    def remove_return_label
+      raise 'no return labels' unless @return_labels.pop
     end
 
     def get_exception_return_label

@@ -27,7 +27,7 @@ module Parfait
       assert_equal Parfait::Space , space.class
       type = space.get_type
       assert_equal Parfait::Type , type.class
-      assert_equal 8 , type.names.get_length
+      assert_equal 9 , type.names.get_length
       assert_equal type.object_class.class , Parfait::Class
       assert_equal type.object_class.name , :Space
     end

@@ -12,10 +12,9 @@ module Risc
     def test_if
         #show_main_ticks # get output of what is in main
         check_main_chain [LoadConstant, LoadConstant, OperatorInstruction, IsZero, LoadConstant, #5
-                 OperatorInstruction, IsZero, LoadConstant, RegToSlot, Branch, #10
-                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #15
-                 FunctionReturn, Transfer, SlotToReg, SlotToReg, Transfer, #20
-                 Syscall, NilClass,] #25
+                 OperatorInstruction, IsZero, LoadConstant, SlotToReg, RegToSlot, #10
+                 Branch, SlotToReg, SlotToReg, FunctionReturn, Transfer, #15
+                 SlotToReg, SlotToReg, Transfer, Syscall, NilClass,] #20
       assert_equal 1 , get_return
     end
     def test_load_10

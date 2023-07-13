@@ -18,12 +18,11 @@ module Risc
                  RegToSlot, SlotToReg, FunctionCall, LoadConstant, LoadConstant, #25
                  SlotToReg, OperatorInstruction, IsNotZero, SlotToReg, RegToSlot, #30
                  SlotToReg, SlotToReg, SlotToReg, ByteToReg, RegToSlot, #35
-                 RegToSlot, SlotToReg, RegToSlot, Branch, SlotToReg, #40
-                 Branch, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #45
-                 FunctionReturn, SlotToReg, RegToSlot, Branch, SlotToReg, #50
-                 SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #55
-                 FunctionReturn, Transfer, SlotToReg, SlotToReg, Transfer, #60
-                 Syscall, NilClass,] #65
+                 RegToSlot, SlotToReg, SlotToReg, RegToSlot, Branch, #40
+                 SlotToReg, SlotToReg, FunctionReturn, SlotToReg, SlotToReg, #45
+                 RegToSlot, Branch, SlotToReg, SlotToReg, Branch, #50
+                 FunctionReturn, Transfer, SlotToReg, SlotToReg, Transfer, #55
+                 Syscall, NilClass,] #60
        assert_equal "H".ord , get_return
     end
     def test_byte_to_reg

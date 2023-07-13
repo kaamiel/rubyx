@@ -43,7 +43,7 @@ module SlotMachine
     end
     def test_has_risc_instructions
       assert_equal Risc::Label, compiler.risc_instructions.class
-      assert_equal 12, compiler.risc_instructions.length
+      assert_equal 10, compiler.risc_instructions.length
     end
   end
 end

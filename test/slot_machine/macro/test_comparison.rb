@@ -14,7 +14,7 @@ module SlotMachine
         assert_equal Risc::MethodCompiler , @method.to_risc.class
       end
       def test_risc_length
-        assert_equal 25 , @method.to_risc.risc_instructions.length
+        assert_equal 23 , @method.to_risc.risc_instructions.length
       end
     end
     class TestIntComp2Risc < BootTest
@@ -29,7 +29,7 @@ module SlotMachine
         assert_equal Risc::MethodCompiler , @method.to_risc.class
       end
       def test_risc_length
-        assert_equal 25 , @method.to_risc.risc_instructions.length
+        assert_equal 23 , @method.to_risc.risc_instructions.length
       end
       def test_all
         assert_slot_to_reg 1 , :message , 2 , "message.receiver"
@@ -46,11 +46,12 @@ module SlotMachine
         assert_label 12 , "merge_label_"
         assert_reg_to_slot 13 , :result , :message , 5
         assert_slot_to_reg 14 ,:message , 5 , "message.return_value"
-        assert_reg_to_slot 15 , "message.return_value" , :message , 5
-        assert_branch 16 , "return_label"
+        assert_slot_to_reg 15 ,:message , 6 , "message.caller"
+        assert_reg_to_slot 16 , "message.return_value" , "message.caller" , 5
+        assert_branch 17 , "return_label"
       end
       def test_return
-        assert_return(17)
+        assert_return(18)
       end
     end
   end

@@ -48,6 +48,14 @@ module Ruby
         end
         else_body = normalized_body(statement.else_body) if statement.else_body
         return RescueStatement.new(body, rescue_bodies, else_body)
+      when EnsureStatement
+        body = if statement.body
+                 normalized_body(statement.body)
+               else
+                 ReturnStatement.new(NilConstant.new)
+               end
+        return body unless statement.ensure_body
+        return EnsureStatement.new(body, statement.ensure_body)
       else
         raise "Not implemented implicit return #{statement.class}"
       end

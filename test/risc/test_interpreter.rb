@@ -73,7 +73,7 @@ module Risc
     end
     def test_pc
       @interpreter.tick
-      assert_equal t = 71752 , @interpreter.pc
+      assert_equal t = 73800 , @interpreter.pc
       @interpreter.tick
       assert_equal t + 4 , @interpreter.pc
     end
@@ -87,14 +87,14 @@ module Risc
       assert_equal 3 , @interpreter.clock
     end
     def test_tick_16_jump
-      #20.times { @interpreter.tick ;puts @interpreter.instruction.class}
-      ticks(20)
+      #21.times { @interpreter.tick ;puts @interpreter.instruction.class}
+      ticks(21)
       assert_equal Branch , @interpreter.instruction.class
       assert_equal "return_label" , @interpreter.instruction.label.name
     end
     def test_tick_26_exit
-      #      31.times { @interpreter.tick ;puts @interpreter.instruction.class}
-      ticks(31)
+      #      29.times { @interpreter.tick ;puts @interpreter.instruction.class}
+      ticks(29)
       assert_equal Syscall , @interpreter.instruction.class
       assert_equal :exit , @interpreter.instruction.name
     end

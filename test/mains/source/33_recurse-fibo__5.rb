@@ -16,8 +16,8 @@ class Space
     if( n <  2 )
       return n
     else
-      a = fibo_r(n - 1)
-      b = fibo_r(n - 2)
+      a = fibo_r(-1 + n)
+      b = fibo_r(-2 + n)
       return a + b
     end
   end

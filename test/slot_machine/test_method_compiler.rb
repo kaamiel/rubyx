@@ -70,7 +70,7 @@ module SlotMachine
     end
     def test_return_label
       compiler = constant_setup("def meth; return 'Hi';end")
-      assert_equal "return_label",  compiler.return_label.name
+      assert_equal "return_label", compiler.get_return_label.name
     end
   end
 end
