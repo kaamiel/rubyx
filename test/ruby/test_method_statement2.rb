@@ -61,5 +61,23 @@ module Ruby
       assert_equal Sol::ReturnStatement, @lst.body.last.body.class
       assert_equal [Sol::ReturnStatement], @lst.body.last.rescue_bodies.map(&:body).map(&:class)
     end
+    def test_rescue_else
+      @lst = compile('def tryout(arg1, arg2); begin; foo; rescue; bar; else; baz; end; end').to_sol
+      assert_equal Sol::RescueStatement, @lst.body.class
+      assert_equal Sol::ReturnStatement, @lst.body.else_body.class
+      assert_equal [Sol::ReturnStatement], @lst.body.rescue_bodies.map(&:body).map(&:class)
+    end
+    def test_ensure
+      @lst = compile('def tryout(arg1, arg2); begin; foo; ensure; bar; end; end').to_sol
+      assert_equal Sol::EnsureStatement, @lst.body.class
+      assert_equal Sol::ReturnStatement, @lst.body.body.class
+      assert_equal Sol::SendStatement, @lst.body.ensure_body.class
+    end
+    def test_ensure_no_body
+      @lst = compile('def tryout(arg1, arg2); begin; ensure; foo; end; end').to_sol
+      assert_equal Sol::EnsureStatement, @lst.body.class
+      assert_equal Sol::ReturnStatement, @lst.body.body.class
+      assert_equal Sol::NilConstant, @lst.body.body.return_value.class
+    end
   end
 end

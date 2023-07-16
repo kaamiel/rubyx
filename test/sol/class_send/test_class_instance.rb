@@ -54,7 +54,7 @@ module Sol
     end
     def test_left
       assert_equal SlottedMessage , @ins.left.class
-      assert_equal :return_value , @ins.left.slots.name
+      assert_equal :caller , @ins.left.slots.name
     end
     def test_right
       assert_equal SlottedMessage , @ins.right.class

@@ -22,7 +22,7 @@ module Sol
       assert_equal :message , @ins.left.known_object
     end
     def test_slot_gets_return
-      assert_equal :return_value , @ins.left.slots.name
+      assert_equal :caller , @ins.left.slots.name
     end
     def test_slot_assigns_something
       assert @ins.right

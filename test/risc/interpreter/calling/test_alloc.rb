@@ -19,11 +19,11 @@ module Risc
                  SlotToReg, FunctionCall, LoadConstant, LoadConstant, SlotToReg, #20
                  OperatorInstruction, IsNotZero, SlotToReg, RegToSlot, SlotToReg, #25
                  SlotToReg, SlotToReg, SlotToReg, OperatorInstruction, RegToSlot, #30
-                 RegToSlot, SlotToReg, RegToSlot, Branch, SlotToReg, #35
-                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #40
+                 RegToSlot, SlotToReg, SlotToReg, RegToSlot, Branch, #35
+                 Branch, SlotToReg, SlotToReg, FunctionReturn, SlotToReg, #40
                  SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #45
-                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, Transfer, #50
-                 SlotToReg, SlotToReg, Transfer, Syscall, NilClass,] #55
+                 FunctionReturn, Transfer, SlotToReg, SlotToReg, Transfer, #50
+                 Syscall, NilClass,] #55
        assert_equal 10 , get_return
     end
 

@@ -17,7 +17,7 @@ module Risc
     end
     def test_live_length
       live = @allocator.walk_and_mark(@compiler.risc_instructions)
-      assert_equal 13 , live.length
+      assert_equal 12 , live.length
     end
     def test_ssa
       instruction = @compiler.risc_instructions.next(2)

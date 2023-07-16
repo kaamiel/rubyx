@@ -42,7 +42,7 @@ module Parfait
       @current_exception = nil
     end
     def init_mem(pages)
-      [:Integer, :ReturnAddress, :Message, :Exception].each do |fact_name|
+      [:Integer, :ReturnAddress, :Message, :EnsureEntry, :Exception].each do |fact_name|
         for_type = @classes[fact_name].instance_type
         page_size = pages[fact_name] || 1024
         factory = Factory.new( for_type , page_size )
@@ -51,6 +51,8 @@ module Parfait
       end
       init_message_chain( factories[ :Message ].reserve  )
       init_message_chain( factories[ :Message ].next_object  )
+      init_ensure_list(factories[:EnsureEntry].next_object)
+      @ensure_list = get_next_for(:EnsureEntry)
     end
     def init_message_chain( message )
       prev = nil
@@ -59,6 +61,14 @@ module Parfait
         message._set_caller(prev) if prev
         prev = message
         message = message.next_message
+      end
+    end
+    def init_ensure_list(ensure_entry)
+      prev = nil
+      while(ensure_entry)
+        ensure_entry._set_prev_entry(prev) if prev
+        prev = ensure_entry
+        ensure_entry = ensure_entry.next_entry
       end
     end
   end

@@ -5,6 +5,7 @@ require "risc/interpreter"
 class RubyXC < Thor
   class_option :integers , type: :numeric
   class_option :messages , type: :numeric
+  class_option :ensure_list , type: :numeric
   class_option :elf , type: :boolean
   class_option :preload , type: :boolean , default: true
 
@@ -13,9 +14,12 @@ class RubyXC < Thor
   #
   private
   def extract_options
-    opt = { Integer: options[:integers] || 1024 ,
-            Message: options[:messages] || 1024}
-    return {parfait: opt }
+    opt = {
+      Integer: options[:integers] || 1024,
+      Message: options[:messages] || 1024,
+      EnsureEntry: options[:ensure_list] || 1024
+    }
+    return { parfait: opt }
   end
   def get_preload
     options[:preload] ? Sol::Builtin.builtin_code : ""

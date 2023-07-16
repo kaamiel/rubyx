@@ -21,7 +21,6 @@ module SlotMachine
   class ReturnSequence < Instruction
     def to_risc(compiler)
       compiler.build(to_s) do
-        message[:caller][:return_value] << message[:return_value]
         return_address = message[:return_address].to_reg
         message << message[:caller]
         add_code Risc.function_return("return #{compiler.callable.name}", return_address)

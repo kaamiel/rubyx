@@ -22,10 +22,11 @@ module Parfait
   class Space < Object
 
     attr_reader :classes, :types, :factories
-    attr_reader :true_object, :false_object, :nil_object, :current_exception
+    attr_reader :true_object, :false_object, :nil_object
+    attr_reader :current_exception, :ensure_list
 
     def self.type_length
-      8
+      9
     end
     def self.memory_size
       8

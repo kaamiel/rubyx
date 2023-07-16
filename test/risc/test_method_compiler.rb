@@ -15,7 +15,7 @@ module Risc
     end
     def test_compiles_all_risc
       assert_equal Risc::LoadConstant , @compiler.risc_instructions.next.class
-      assert_equal 15 , @compiler.risc_instructions.length
+      assert_equal 13 , @compiler.risc_instructions.length
     end
     def test_translate_cpu
       cpu = @compiler.translate_cpu(Platform.for(:arm).translator)

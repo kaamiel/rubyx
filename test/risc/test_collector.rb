@@ -38,7 +38,7 @@ module Risc
     end
 
     def len
-      2480
+      2522
     end
 
     def test_collect_all_types
@@ -70,7 +70,7 @@ module Risc
     end
 
     def len
-      3960
+      4002
     end
   end
 end

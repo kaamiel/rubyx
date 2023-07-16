@@ -11,9 +11,9 @@ module Risc
 
     def test_chain
       # show_main_ticks # get output of what is
-      check_main_chain [LoadConstant, RegToSlot, Branch, SlotToReg, SlotToReg, #5
-                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, Transfer, #10
-                 SlotToReg, SlotToReg, Transfer, Syscall, NilClass,] #15
+      check_main_chain [LoadConstant, SlotToReg, RegToSlot, Branch, SlotToReg, #5
+                 SlotToReg, FunctionReturn, Transfer, SlotToReg, SlotToReg, #10
+                 Transfer, Syscall, NilClass,] #15
       assert_equal 5 , get_return
     end
 
@@ -22,7 +22,7 @@ module Risc
     end
 
     def test_function_return
-      ret = main_ticks(9)
+      ret = main_ticks(7)
       assert_equal FunctionReturn ,  ret.class
       link = @interpreter.get_register( ret.register )
       assert_equal Parfait::ReturnAddress , link.class

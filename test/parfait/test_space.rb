@@ -7,11 +7,11 @@ module Parfait
       [:Behaviour ,:BinaryCode,:Block,:CacheEntry,:Callable,:CallableMethod,:Class,
         :DataObject,:Data4,:Data8,:Data16,:Data32,:Dictionary,:Factory, :Integer,:FalseClass,
         :List,:Message, :SingletonClass,:NilClass,:Object,:ReturnAddress,
-        :Space,:TrueClass,:Type,:SolMethod,:Word,:Exception,:StandardError,:RuntimeError,:TypeError]
+        :Space,:TrueClass,:Type,:SolMethod,:Word,:EnsureEntry,:Exception,:StandardError,:RuntimeError,:TypeError]
     end
 
     def test_space_length
-      assert_equal 8, @space.get_type.instance_length, @space.get_type.inspect
+      assert_equal 9, @space.get_type.instance_length, @space.get_type.inspect
     end
     def test_singletons
       assert @space.true_object , "No truth"
@@ -20,6 +20,9 @@ module Parfait
     end
     def test_current_exception
       assert_nil @space.current_exception
+    end
+    def test_ensure_list
+      assert_instance_of EnsureEntry, @space.ensure_list
     end
     def space_class
       Parfait.object_space.get_class_by_name(:Space)
@@ -84,7 +87,7 @@ module Parfait
       assert_equal Dictionary , @space.factories.class
     end
     def test_factory_length
-      assert_equal 4 , @space.factories.length
+      assert_equal 5 , @space.factories.length
     end
     def test_has_integer_factory
       ints = @space.get_factory_for(:Integer)
@@ -128,6 +131,14 @@ module Parfait
     end
     def test_has_next_exception
       assert_equal Parfait::Exception, @space.get_next_for(:Exception).class
+    end
+    def test_has_ensure_entry_factory
+      ints = @space.get_factory_for(:EnsureEntry)
+      assert_equal Factory, ints.class
+      assert_equal :EnsureEntry, ints.for_type.class_name
+    end
+    def test_has_next_entry
+      assert_equal Parfait::EnsureEntry, @space.get_next_for(:EnsureEntry).class
     end
 
     def test_create_class
