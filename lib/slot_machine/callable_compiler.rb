@@ -56,6 +56,8 @@ module SlotMachine
       self
     end
 
+    # stack of exception handler labels
+    # used at compile time
     def get_exception_return_label
       @exception_return_labels.last
     end

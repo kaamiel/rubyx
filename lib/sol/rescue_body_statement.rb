@@ -1,6 +1,6 @@
 module Sol
   class RescueBodyStatement < Statement
-    attr_reader :exception_classes
+    attr_reader :exception_classes, :assignment, :body
 
     def initialize(exception_classes, assignment, body)
       @exception_classes = exception_classes

@@ -78,6 +78,8 @@ module SlotMachine
           message[:next_message][:exc_return_address] << exception_return_address
           message[:next_message][:exc_handler] << message
         else
+          # this method does not do any exception handling,
+          # pass the same exc_return_address and exc_handler that it got itself
           message[:next_message][:exc_return_address] << message[:exc_return_address]
           message[:next_message][:exc_handler] << message[:exc_handler]
         end
