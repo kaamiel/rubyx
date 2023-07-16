@@ -1,5 +1,7 @@
 module Sol
   class EnsureStatement < Statement
+    attr_reader :body, :ensure_body
+
     def initialize(body, ensure_body)
       @body = body
       @ensure_body = ensure_body

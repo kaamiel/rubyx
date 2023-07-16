@@ -1,5 +1,10 @@
 module SlotMachine
   class EnsureSetup < Instruction
+    # Sets a marker in what mode the ensure block is being executed:
+    # - standard, or
+    # - because of return, or
+    # - because of raised exception,
+    # to know what to do after the block (see EnsureContinuation instruction).
     def initialize(source, marker)
       super(source)
       @marker = marker

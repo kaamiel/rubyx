@@ -49,6 +49,8 @@ module SlotMachine
       self
     end
 
+    # stack of return labels
+    # used at compile time, mainly to handle ensure statements
     def get_return_label
       @return_labels.last
     end

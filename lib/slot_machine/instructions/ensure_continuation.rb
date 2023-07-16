@@ -1,5 +1,10 @@
 module SlotMachine
   class EnsureContinuation < Instruction
+    # Depending on the mode in what the ensure block was executed:
+    # - continue execution, or
+    # - jump to return label, or
+    # - raise/jump to exception return label.
+    # The marker is set in EnsureSetup instruction.
     def initialize(source, standard_label, return_label, exception_return_label)
       super(source)
       @standard_label = standard_label
@@ -8,7 +13,7 @@ module SlotMachine
     end
 
     def to_risc(compiler)
-      builder = compiler.builder(compiler.source)
+      builder = compiler.builder(self)
       integer_1 = builder.register(:integer_1)
 
       standard_label = @standard_label.risc_label(compiler)
