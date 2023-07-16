@@ -12,22 +12,26 @@ module Risc
     def test_chain
       #show_main_ticks # get output of what is
       check_main_chain [LoadConstant, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #5
-                 SlotToReg, SlotToReg, RegToSlot, LoadConstant, SlotToReg, #10
-                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, SlotToReg, #15
-                 FunctionCall, LoadConstant, SlotToReg, OperatorInstruction, IsZero, #20
-                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #25
-                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, SlotToReg, #30
-                 SlotToReg, DynamicJump, LoadConstant, SlotToReg, SlotToReg, #35
-                 RegToSlot, LoadConstant, RegToSlot, Branch, SlotToReg, #40
-                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #45
-                 SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #50
-                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, SlotToReg, #55
+                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #10
+                 RegToSlot, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #15
+                 SlotToReg, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #20
+                 LoadConstant, SlotToReg, RegToSlot, SlotToReg, FunctionCall, #25
+                 LoadConstant, SlotToReg, OperatorInstruction, IsZero, SlotToReg, #30
+                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, RegToSlot, #35
+                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #40
+                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, LoadConstant, #45
+                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, DynamicJump, #50
+                 LoadConstant, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #55
                  RegToSlot, Branch, SlotToReg, SlotToReg, RegToSlot, #60
-                 SlotToReg, SlotToReg, FunctionReturn, Transfer, SlotToReg, #65
-                 SlotToReg, Transfer, Syscall, NilClass,] #70
+                 SlotToReg, SlotToReg, FunctionReturn, SlotToReg, RegToSlot, #65
+                 Branch, SlotToReg, Branch, SlotToReg, RegToSlot, #70
+                 SlotToReg, SlotToReg, FunctionReturn, SlotToReg, RegToSlot, #75
+                 Branch, SlotToReg, Branch, SlotToReg, RegToSlot, #80
+                 SlotToReg, SlotToReg, FunctionReturn, Transfer, SlotToReg, #85
+                 SlotToReg, Transfer, Syscall, NilClass,] #90
       assert_equal 10 , get_return
     end
-    def base ; 32 ; end
+    def base ; 50 ; end
 
     def test_block_jump
       load_ins = main_ticks(base)
@@ -45,7 +49,7 @@ module Risc
       assert_slot_to_reg base+3 ,:r1 , 6 , :r2
     end
     def test_block_reg
-      assert_reg_to_slot base+4 ,:r0 , :r2 , 16
+      assert_reg_to_slot base+4 ,:r0 , :r2 , 18
     end
     def test_ret_load
       assert_load base+5 , Parfait::Integer , :r0

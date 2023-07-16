@@ -6,10 +6,10 @@ module SlotMachine
       MessageSetup.new( 1 )
     end
     def test_len
-      assert_equal 4 , all.length , all_str
+      assert_equal 10 , all.length , all_str
     end
     def test_1_slot
-      assert_slot_to_reg 1 ,:message , 9 , :"message.arg1"
+      assert_slot_to_reg 1 ,:message , 11 , :"message.arg1"
     end
     def test_2_slot
       assert_slot_to_reg 2 ,:message , 1 , :"message.next_message"
@@ -27,7 +27,7 @@ module SlotMachine
       MessageSetup.new( cache_entry )
     end
     def test_len
-      assert_equal 5 , all.length , all_str
+      assert_equal 11 , all.length , all_str
     end
     def test_1_load
       assert_load 1 , Parfait::CacheEntry , "id_"

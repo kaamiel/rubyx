@@ -48,7 +48,7 @@ module Sol
     # we do a message setup, arg transfer and the a arg_yield (which is similar to dynamic_call)
     def yield_arg_block(compiler)
       arg_index = compiler.get_method.arguments_type.get_length - 1
-      setup  = SlotMachine::MessageSetup.new( arg_index )
+      setup = SlotMachine::MessageSetup.new(arg_index, compiler.get_exception_return_label)
       slot_receive = @receiver.to_slotted(compiler)
       args = @arguments.collect { |arg|  arg.to_slotted(compiler)}
       setup << SlotMachine::ArgumentTransfer.new( self , slot_receive , args )

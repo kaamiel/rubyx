@@ -15,6 +15,7 @@ module SlotMachine
     def initialize( callable )
       @callable = callable
       @constants = []
+      @exception_return_labels = []
       @slot_instructions = Label.new(source_name, source_name)
       @current = start = @slot_instructions
       add_code Label.new( source_name, "return_label")
@@ -53,6 +54,20 @@ module SlotMachine
       @current.insert(instruction) #insert after current
       @current = new_current
       self
+    end
+
+    # stack of exception handler labels
+    # used at compile time
+    def get_exception_return_label
+      @exception_return_labels.last
+    end
+
+    def add_exception_return_label(label)
+      @exception_return_labels << label
+    end
+
+    def remove_exception_return_label
+      raise 'no exception return labels' unless @exception_return_labels.pop
     end
 
     # return the frame type, ie the blocks self_type

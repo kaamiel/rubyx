@@ -19,7 +19,7 @@ module SlotMachine
       assert_reg_to_slot 3, "id_" , "message.next_message" , 4
     end
     def test_4_slot
-      assert_slot_to_reg 4,:message , 9 , "message.arg1"
+      assert_slot_to_reg 4,:message , 11 , "message.arg1"
     end
     def test_5_swap
       assert_slot_to_reg 5,:message , 1 , :message

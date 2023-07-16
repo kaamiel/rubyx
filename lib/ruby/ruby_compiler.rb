@@ -147,6 +147,26 @@ module Ruby
     end
     alias  :on_begin :on_kwbegin
 
+    # Exception handling
+    def on_rescue(statement)
+      body = process(statement.children[0])
+      rescue_bodies = statement.children[1..-2].map { |resbody| process(resbody) }
+      else_body = statement.children[-1]
+      raise "else not implemented #{else_body}" if else_body
+
+      RescueStatement.new(body, rescue_bodies)
+    end
+
+    def on_resbody(statement)
+      exception_classes = (statement.children[0]&.children || []).map { |c| process(c) }
+      raise "only exception class implemented, not #{exception_classes.reject { |c| c.is_a?(ModuleName) }}" unless exception_classes.all? { |c| c.is_a?(ModuleName) }
+      assignment = process(statement.children[1])
+      raise "assignment not implemented #{assignment}" if assignment
+      body = process(statement.children[2])
+
+      RescueBodyStatement.new(exception_classes, assignment, body)
+    end
+
     # Array + Hashes
     def on_array expression
       ArrayStatement.new expression.children.collect{ |elem| process(elem) }

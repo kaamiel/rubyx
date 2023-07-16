@@ -34,7 +34,7 @@ module SlotMachine
       def test_all
         assert_slot_to_reg 1 , :message , 2 , "message.receiver"
         assert_slot_to_reg 2 , "message.receiver" , 2 , "message.receiver.data_1"
-        assert_slot_to_reg 3 ,:message , 9 , "message.arg1"
+        assert_slot_to_reg 3 ,:message , 11 , "message.arg1"
         assert_slot_to_reg 4 , "message.arg1" , 2 , "message.arg1.data_1"
         assert_operator 5 , :- , "message.receiver.data_1" , "message.arg1.data_1" ,"op_-_"
         assert_minus 6 , "false_label_"

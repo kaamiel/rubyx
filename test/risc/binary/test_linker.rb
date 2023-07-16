@@ -24,7 +24,7 @@ module Risc
       assert_equal 0 ,  Position.get(@linker.cpu_init).at
     end
     def test_cpu_at
-      assert_equal "0x8d5c" ,  Position.get(@linker.cpu_init.first).to_s
+      assert_equal "0x1167c", Position.get(@linker.cpu_init.first).to_s
     end
     def test_cpu_label
       assert_equal Position ,  Position.get(@linker.cpu_init.first).class

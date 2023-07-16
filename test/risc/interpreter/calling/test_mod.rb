@@ -12,21 +12,23 @@ module Risc
 
     def test_chain
       #show_main_ticks # get output of what is
-      check_main_chain [LoadConstant, SlotToReg, RegToSlot, LoadConstant, SlotToReg, #5
-                 RegToSlot, LoadConstant, SlotToReg, RegToSlot, SlotToReg, #10
-                 FunctionCall, LoadConstant, LoadConstant, SlotToReg, OperatorInstruction, #15
-                 IsNotZero, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #20
-                 LoadData, OperatorInstruction, RegToSlot, RegToSlot, SlotToReg, #25
-                 RegToSlot, Branch, SlotToReg, Branch, SlotToReg, #30
-                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, SlotToReg, #35
-                 RegToSlot, Branch, SlotToReg, SlotToReg, RegToSlot, #40
-                 SlotToReg, SlotToReg, FunctionReturn, Transfer, SlotToReg, #45
-                 SlotToReg, Transfer, Syscall, NilClass,] #50
+      check_main_chain [LoadConstant, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #5
+                 RegToSlot, SlotToReg, SlotToReg, RegToSlot, LoadConstant, #10
+                 SlotToReg, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #15
+                 LoadConstant, SlotToReg, RegToSlot, SlotToReg, FunctionCall, #20
+                 LoadConstant, LoadConstant, SlotToReg, OperatorInstruction, IsNotZero, #25
+                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, LoadData, #30
+                 OperatorInstruction, RegToSlot, RegToSlot, SlotToReg, RegToSlot, #35
+                 Branch, SlotToReg, Branch, SlotToReg, RegToSlot, #40
+                 SlotToReg, SlotToReg, FunctionReturn, SlotToReg, RegToSlot, #45
+                 Branch, SlotToReg, SlotToReg, RegToSlot, SlotToReg, #50
+                 SlotToReg, FunctionReturn, Transfer, SlotToReg, SlotToReg, #55
+                 Transfer, Syscall, NilClass,] #60
        assert_equal 2 , get_return
     end
 
     def test_op
-      assert_operator 22 , :>>,  :r1 , :r0 , :r3
+      assert_operator 31 , :>>,  :r1 , :r0 , :r3
       assert_equal 2 , @interpreter.get_register(:r0)
       assert_equal 9 , @interpreter.get_register(:r1)
     end

@@ -17,7 +17,7 @@
 module Parfait
   class Class < Behaviour
 
-    attr_reader :name , :super_class_name
+    attr_reader :name
 
     def self.type_length
       6
@@ -29,7 +29,7 @@ module Parfait
     def initialize( name , superclass , instance_type)
       super(instance_type)
       @name = name
-      @super_class_name = superclass
+      @super_class = superclass
     end
 
     def single_class
@@ -54,16 +54,20 @@ module Parfait
     def super_class!
       raise "No super_class for class #{@name}" if is_object?
       s = super_class
-      raise "superclass not found for class #{@name} (#{@super_class_name})" unless s
+      raise "superclass not found for class #{@name}" unless s
       s
     end
 
     # return the super class
-    # we only store the name, and so have to resolve.
-    # Nil name means no superclass, and so nil is a valid return value
+    # Nil means no superclass, and so nil is a valid return value
     def super_class
-      return nil if is_object?
-      Object.object_space.get_class_by_name(@super_class_name)
+      @super_class
+    end
+
+    def super_class_name
+      return :Object if is_object?
+
+      @super_class.name
     end
 
     def is_object?

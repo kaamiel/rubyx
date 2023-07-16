@@ -64,7 +64,7 @@ module Parfait
     end
 
     def test_get_method_raises
-      assert_raises(RuntimeError){ @space.get_method!(:Space,:main)}
+      assert_raises(::RuntimeError){ @space.get_method!(:Space,:main)}
     end
 
   end

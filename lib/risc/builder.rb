@@ -174,6 +174,15 @@ module Risc
       SlotMachine::SimpleCall.new(calling).to_risc(compiler)
     end
 
-  end
+    def allocate_exception
+      factory = load_object Parfait.object_space.get_factory_for(:Exception)
+      exception = nil
+      build do
+        exception = factory[:next_object].to_reg.known_type(:Exception)
+        factory[:next_object] << exception[:next_exception]
+      end
 
+      exception
+    end
+  end
 end

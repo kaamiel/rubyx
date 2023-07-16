@@ -9,14 +9,14 @@ module Ruby
 
     # At the moment normalizing means creating implicit returns for some cases
     # see replace_return for details.
-    def normalized_body
-      return replace_return( @body ) unless  @body.is_a?(Statements)
-      body = Statements.new( @body.statements.dup )
-      body << replace_return( body.pop )
+    def normalized_body(statement)
+      return replace_return(statement) unless statement.is_a?(Statements)
+      body = Statements.new(statement.statements.dup)
+      body << replace_return(body.pop)
     end
 
     def to_sol
-      body = normalized_body
+      body = normalized_body(@body)
       Sol::MethodExpression.new( @name , @args.dup , body.to_sol)
     end
 
@@ -32,6 +32,17 @@ module Ruby
         return Statements.new([statement , ret])
       when ReturnStatement , IfStatement , WhileStatement ,RubyBlockStatement
         return statement
+      when ScopeStatement
+        return normalized_body(statement)
+      when RescueStatement
+        return ReturnStatement.new(NilConstant.new) unless statement.body
+
+        body = normalized_body(statement.body)
+        rescue_bodies = statement.rescue_bodies.map do |rescue_body|
+          RescueBodyStatement.new(rescue_body.exception_classes, rescue_body.assignment,
+                                  normalized_body(rescue_body.body))
+        end
+        return RescueStatement.new(body, rescue_bodies)
       else
         raise "Not implemented implicit return #{statement.class}"
       end

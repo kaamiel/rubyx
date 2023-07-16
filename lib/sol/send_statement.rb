@@ -66,7 +66,7 @@ module Sol
     end
 
     def message_setup(compiler,called_method)
-      setup  = SlotMachine::MessageSetup.new( called_method )
+      setup = SlotMachine::MessageSetup.new(called_method, compiler.get_exception_return_label)
       slot_receive = @receiver.to_slotted(compiler)
       args = @arguments.collect { |arg|  arg.to_slotted(compiler)}
       setup << SlotMachine::ArgumentTransfer.new(self, slot_receive , args )

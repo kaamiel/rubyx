@@ -26,5 +26,7 @@ require_relative "ruby/call_statement"
 require_relative "ruby/send_statement"
 require_relative "ruby/yield_statement"
 require_relative "ruby/variables"
+require_relative "ruby/rescue_statement"
+require_relative "ruby/rescue_body_statement"
 
 require_relative "ruby/ruby_compiler"

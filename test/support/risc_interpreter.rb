@@ -33,7 +33,7 @@ module Risc
       ticks( start_at ) if start_at > 0
       should.each_with_index do |name , index|
         got = ticks(1)
-        assert_equal got.class ,name , "Wrong class for #{index + 1}, expect #{name} , got #{got}"
+        assert_equal name, got.class, "Wrong class for #{index + 1}, expect #{name}, got #{got}"
       end
     end
     # check the main only, ignoring the __init instructions

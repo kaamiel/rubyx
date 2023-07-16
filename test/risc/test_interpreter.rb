@@ -73,7 +73,7 @@ module Risc
     end
     def test_pc
       @interpreter.tick
-      assert_equal t = 36072 , @interpreter.pc
+      assert_equal t = 71752 , @interpreter.pc
       @interpreter.tick
       assert_equal t + 4 , @interpreter.pc
     end
@@ -87,19 +87,19 @@ module Risc
       assert_equal 3 , @interpreter.clock
     end
     def test_tick_16_jump
-      #16.times { @interpreter.tick ;puts @interpreter.instruction.class}
-      ticks(16)
+      #20.times { @interpreter.tick ;puts @interpreter.instruction.class}
+      ticks(20)
       assert_equal Branch , @interpreter.instruction.class
       assert_equal "return_label" , @interpreter.instruction.label.name
     end
     def test_tick_26_exit
-      #      26.times { @interpreter.tick ;puts @interpreter.instruction.class}
-      ticks(27)
+      #      31.times { @interpreter.tick ;puts @interpreter.instruction.class}
+      ticks(31)
       assert_equal Syscall , @interpreter.instruction.class
       assert_equal :exit , @interpreter.instruction.name
     end
     def test_tick_13_bin
-      ticks(13)
+      ticks(17)
       bin_pos = binary_position
       @interpreter.tick #jump into next binary
       assert bin_pos.at != binary_position.at , "#{bin_pos} == #{binary_position}"
@@ -110,8 +110,8 @@ module Risc
       assert_equal InstructionListener, list.class
       Position.get(list.binary)
     end
-    def test_tick_15 #more than a binary code worth
-      15.times {@interpreter.tick}
+    def test_tick_19 #more than a binary code worth
+      19.times {@interpreter.tick}
     end
     class TestInterpreterDies < MiniTest::Test
       include Ticker
@@ -121,7 +121,7 @@ module Risc
       end
       def test_dies
         # no method does syscall :dies that raises
-        assert_raises {44.times {@interpreter.tick}}
+        assert_raises {48.times {@interpreter.tick}}
       end
     end
   end

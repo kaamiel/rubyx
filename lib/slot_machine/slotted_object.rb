@@ -41,7 +41,7 @@ module SlotMachine
     #       They are very similar (apart from the final reg_to_slot here) and should
     #       most likely be united
     def reduce_and_load(const_reg , compiler , original_source )
-      raise "only cache" unless known_object.is_a?( Parfait::CacheEntry)
+      raise 'only cache or space' unless known_object.is_a?(Parfait::CacheEntry) || known_object.is_a?(Parfait::Space)
       load = Risc.load_constant(original_source, known_object )
       left = load.register
       compiler.add_code load

@@ -54,9 +54,9 @@ module SlotMachine
 end
 
 require_relative "comparison"
-require_relative  "exit"
+require_relative "exit"
 require_relative "init"
-require_relative	"putstring"
+require_relative "putstring"
 require_relative "set_internal_word"
 require_relative "div10"
 require_relative "get_internal_byte"
@@ -65,3 +65,4 @@ require_relative "div4"
 require_relative "get_internal_word"
 require_relative "operator"
 require_relative "set_internal_byte"
+require_relative "raise"

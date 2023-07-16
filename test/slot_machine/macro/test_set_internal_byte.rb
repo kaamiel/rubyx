@@ -18,12 +18,12 @@ module SlotMachine
         assert_equal 20 , @method.to_risc.risc_instructions.length
       end
       def test_all
-        assert_slot_to_reg 1 ,:message , 10 , "message.arg2"
+        assert_slot_to_reg 1 ,:message , 12 , "message.arg2"
         assert_reg_to_slot 2 , "message.arg2" , :message , 5
-        assert_slot_to_reg 3 ,:message , 9 , "message.arg1"
+        assert_slot_to_reg 3 ,:message , 11 , "message.arg1"
         assert_slot_to_reg 4 ,"message.arg1" , 2 , "message.arg1.data_1"
         assert_slot_to_reg 5 ,:message , 2 , "message.receiver"
-        assert_slot_to_reg 6 ,:message , 10 , "message.arg2"
+        assert_slot_to_reg 6 ,:message , 12 , "message.arg2"
         assert_slot_to_reg 7 ,"message.arg2" , 2 , "message.arg2.data_1"
         assert_equal Risc::RegToByte , risc(8).class
         assert_slot_to_reg 9 ,:message , 5 , "message.return_value"

@@ -21,10 +21,11 @@ module Parfait
 
   class Space < Object
 
-    attr_reader  :classes , :types , :factories
-    attr_reader  :true_object , :false_object , :nil_object
+    attr_reader :classes, :types, :factories
+    attr_reader :true_object, :false_object, :nil_object, :current_exception
+
     def self.type_length
-      7
+      8
     end
     def self.memory_size
       8
@@ -114,12 +115,14 @@ module Parfait
     # Only Sol::ClassExpression really ever creates classes and "grows" the type
     # according to the instances it finds, see there
     #
-    def create_class( name , superclass = nil )
+    def create_class(name, super_class_name = nil)
       raise "create_class #{name.class}" unless name.is_a? Symbol
-      superclass = :Object unless superclass
-      raise "create_class failed for #{name}:#{superclass.class}" unless superclass.is_a? Symbol
-      type = get_type_by_class_name(superclass)
-      c = Class.new(name , superclass , type )
+      super_class_name ||= :Object
+      raise "create_class failed for #{name}:#{super_class_name.class}" unless super_class_name.is_a? Symbol
+      super_class = get_class_by_name(super_class_name)
+      type = get_type_by_class_name(super_class_name)
+      c = Class.new(name, super_class, type)
+      c.instance_variable_set(:@instance_type, Type.for_hash(type.to_hash, c))
       @classes[name] = c
     end
 

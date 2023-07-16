@@ -38,7 +38,7 @@ module SlotMachine
         s = Risc.allocate_length
         assert_slot_to_reg s + 1 ,:message , 2 , "message.receiver"
         assert_slot_to_reg s + 2 ,"message.receiver" , 2 , "message.receiver.data_1"
-        assert_slot_to_reg s + 3 ,:message , 9 , "message.arg1"
+        assert_slot_to_reg s + 3 ,:message , 11 , "message.arg1"
         assert_slot_to_reg s + 4 , "message.arg1" , 2 , "message.arg1.data_1"
         assert_operator s + 5 , :| , "message.receiver.data_1" , "message.arg1.data_1" , "op_|_"
         assert_reg_to_slot s + 6 , "op_|_"  , "id_factory_.next_object" , 2

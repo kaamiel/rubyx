@@ -11,5 +11,8 @@ module SlotMachine
     def test_1_slot
       assert_branch 1, "target"
     end
+    def test_to_s
+      assert_equal 'Jump to Label: target', @instruction.to_s
+    end
   end
 end

@@ -52,7 +52,7 @@ module Parfait
       object_type = Parfait.object_space.get_type_by_class_name(name)
       raise "nil type" unless object_type
       cl.instance_eval{ @instance_type = object_type}
-      cl.instance_eval{ @super_class_name = super_names[name] || :Object}
+      cl.instance_eval{ @super_class = classes[super_names[name]] }
       object_type.instance_eval{ @object_class = cl }
     end
   end
@@ -71,31 +71,40 @@ module Parfait
     object.each {|obj| fix_object_type(obj)}
   end
 
-  # superclasses other than default object
+  # superclasses, default Object
   def self.super_class_names
-     { Data4: :DataObject ,
-       Data8: :DataObject ,
-       Data16: :DataObject ,
-       Data32: :DataObject ,
-       BinaryCode: :Data32 ,
-       TrueClass: :Data4 ,
-       FalseClass: :Data4 ,
-       NilClass: :Data4 ,
-       Integer: :Data4 ,
-       Word: :Data8 ,
-       List: :Data16 ,
-       CallableMethod: :Callable,
-       Block: :Callable,
-       Class: :Behaviour,
-       SingletonClass: :Behaviour ,
-       ReturnAddress: :Integer}
+    h = {
+      Object: nil,
+      Data4: :DataObject,
+      Data8: :DataObject,
+      Data16: :DataObject,
+      Data32: :DataObject,
+      BinaryCode: :Data32,
+      TrueClass: :Data4,
+      FalseClass: :Data4,
+      NilClass: :Data4,
+      Integer: :Data4,
+      Word: :Data8,
+      List: :Data16,
+      CallableMethod: :Callable,
+      Block: :Callable,
+      Class: :Behaviour,
+      SingletonClass: :Behaviour,
+      ReturnAddress: :Integer,
+      StandardError: :Exception,
+      RuntimeError: :StandardError,
+      TypeError: :StandardError
+    }
+    h.default = :Object
+    h
   end
 
   # the function really just returns a constant (just avoiding the constant)
   # unfortuantely that constant condenses every detail about the system, class names
   # and all instance variable names. Really have to find a better way
   def self.type_names
-     {Behaviour: {instance_type: :Type , instance_methods: :List  } ,
+    {
+      Behaviour: { instance_type: :Type, instance_methods: :List },
       BinaryCode: {next_code: :BinaryCode} ,
       Block: {binary: :BinaryCode, next_callable: :Block,
               arguments_type: :Type , self_type: :Type, frame_type: :Type,
@@ -107,8 +116,8 @@ module Parfait
       CallableMethod: {binary: :BinaryCode, next_callable: :CallableMethod ,
                        arguments_type: :Type , self_type: :Type, frame_type: :Type ,
                        name: :Word , blocks: :Block} ,
-      Class: {instance_methods: :List, instance_type: :Type,
-              name: :Word, super_class_name: :Word , single_class: :SingletonClass},
+      Class: { instance_methods: :List, instance_type: :Type,
+               name: :Word, super_class: :Class, single_class: :SingletonClass },
       DataObject: {},
       Data4: {},
       Data8: {},
@@ -123,6 +132,7 @@ module Parfait
       Message: { next_message: :Message,   receiver: :Object, frame: :Object ,
                  return_address: :Integer, return_value: :Object,
                  caller: :Message , method: :CallableMethod ,
+                 exc_return_address: :Integer, exc_handler: :Message,
                  arguments_given: :Integer ,
                  arg1: :Object , arg2: :Object, arg3: :Object,
                  arg4: :Object,  arg5: :Object, arg6: :Object,
@@ -135,15 +145,20 @@ module Parfait
       NilClass: {},
       Object: {},
       ReturnAddress: {next_integer: :ReturnAddress},
-      Space: {classes: :Dictionary , types: :Dictionary , factories: :Dictionary,
-              true_object: :TrueClass, false_object: :FalseClass , nil_object: :NilClass},
+      Space: { classes: :Dictionary, types: :Dictionary, factories: :Dictionary,
+               true_object: :TrueClass, false_object: :FalseClass, nil_object: :NilClass,
+               current_exception: :Exception },
       TrueClass: {},
       Type: {names: :List , types: :List  ,
              object_class: :Class, methods: :CallableMethod ,
              is_single: :Object} ,
       SolMethod: { name: :Word , args_type: :Type , frame_type: :Type } ,
       Word: {char_length: :Integer , next_word: :Word} ,
-      }
+      Exception: { cause: :Exception, next_exception: :Exception },
+      StandardError: { cause: :Exception, next_exception: :Exception },
+      RuntimeError: { cause: :Exception, next_exception: :Exception },
+      TypeError: { cause: :Exception, next_exception: :Exception }
+    }
   end
 
 end

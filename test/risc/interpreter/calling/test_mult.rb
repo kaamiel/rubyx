@@ -14,28 +14,28 @@ module Risc
       #show_main_ticks # get output of what is
       check_main_chain [LoadConstant, SlotToReg, RegToSlot, LoadConstant, SlotToReg, #5
                  RegToSlot, LoadConstant, SlotToReg, RegToSlot, LoadConstant, #10
-                 SlotToReg, RegToSlot, SlotToReg, FunctionCall, LoadConstant, #15
-                 LoadConstant, SlotToReg, OperatorInstruction, IsNotZero, SlotToReg, #20
-                 RegToSlot, SlotToReg, SlotToReg, SlotToReg, SlotToReg, #25
-                 OperatorInstruction, RegToSlot, RegToSlot, SlotToReg, RegToSlot, #30
-                 Branch, SlotToReg, SlotToReg, RegToSlot, SlotToReg, #35
-                 SlotToReg, FunctionReturn, SlotToReg, RegToSlot, Branch, #40
-                 SlotToReg, SlotToReg, RegToSlot, SlotToReg, SlotToReg, #45
-                 FunctionReturn, Transfer, SlotToReg, SlotToReg, Transfer, #50
-                 Syscall, NilClass,] #55
+                 SlotToReg, RegToSlot, LoadConstant, SlotToReg, RegToSlot, #15
+                 SlotToReg, FunctionCall, LoadConstant, LoadConstant, SlotToReg, #20
+                 OperatorInstruction, IsNotZero, SlotToReg, RegToSlot, SlotToReg, #25
+                 SlotToReg, SlotToReg, SlotToReg, OperatorInstruction, RegToSlot, #30
+                 RegToSlot, SlotToReg, RegToSlot, Branch, SlotToReg, #35
+                 SlotToReg, RegToSlot, SlotToReg, SlotToReg, FunctionReturn, #40
+                 SlotToReg, RegToSlot, Branch, SlotToReg, SlotToReg, #45
+                 RegToSlot, SlotToReg, SlotToReg, FunctionReturn, Transfer, #50
+                 SlotToReg, SlotToReg, Transfer, Syscall, NilClass,] #55
        assert_equal 0 , get_return
     end
     def test_zero
-      ticks( 12 )
+      ticks( 15 )
       assert @interpreter.flags[:zero]
     end
     def test_op
-      assert_operator 26 , :*,  :r1 , :r3 , :r0
+      assert_operator 29 , :*,  :r1 , :r3 , :r0
       assert_equal 2147483648 , @interpreter.get_register(:r3)
       assert_equal 2147483648 , @interpreter.get_register(:r1)
     end
     def test_overflow
-      main_ticks( 26 )
+      main_ticks( 29 )
       assert @interpreter.flags[:overflow]
     end
   end

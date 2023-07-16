@@ -28,22 +28,22 @@ module Parfait
       assert_equal ::Parfait::Word.new(5) , @word
     end
     def test_index_check_get
-      assert_raises RuntimeError do
+      assert_raises ::RuntimeError do
         @word.get_char(-6)
       end
     end
     def test_index_check_set
-      assert_raises RuntimeError do
+      assert_raises ::RuntimeError do
         @word.set_char(6 , 32)
       end
     end
     def test_index_check_get
-      assert_raises RuntimeError do
+      assert_raises ::RuntimeError do
         @word.get_char(6)
       end
     end
     def test_index_check_set
-      assert_raises RuntimeError do
+      assert_raises ::RuntimeError do
         @word.set_char(-6 , 32)
       end
     end
