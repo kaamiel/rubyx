@@ -1,4 +1,7 @@
 module SlotMachine
+  # An equivalent to Ruby's Object#is_a?.
+  # i.e. object_class.is_a?(klass)
+  # object_class may be an object (Slotted) or class (RegisterValue)
   class IsKindOf < Instruction
     def initialize(object_class, klass, true_label: nil, false_label: nil)
       @object_class = object_class

@@ -1,5 +1,6 @@
 module SlotMachine
   class MatchExceptionClass < Instruction
+    # basically resolves to IsKindOf instruction
     def initialize(source, exception_class_to_match, matched_label: nil, not_matched_label: nil)
       super(source)
       @exception_class_to_match = exception_class_to_match

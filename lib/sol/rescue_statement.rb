@@ -1,5 +1,7 @@
 module Sol
   class RescueStatement < Statement
+    attr_reader :body, :rescue_bodies, :else_body
+
     def initialize(body, rescue_bodies, else_body)
       @body = body
       @rescue_bodies = rescue_bodies

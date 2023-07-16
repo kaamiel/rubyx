@@ -1,4 +1,5 @@
 module SlotMachine
+  # An equivalent to Ruby's Kernel#raise.
   class Raise < Macro
     def initialize(source, index = nil)
       super(source)
@@ -29,13 +30,14 @@ module SlotMachine
 
           IsKindOf.new(message[index].to_reg, exception_class, false_label: type_error_label).to_risc(compiler)
 
+          # ok, save previous exception as cause and raise exception_object
           space = load_object Parfait.object_space
           exception_object[:type] << message[index].to_reg.known_type(:Class)[:instance_type]
           exception_object[:cause] << space[:current_exception]
           space[:current_exception] << exception_object
           branch merge_label
 
-          # exception class expected
+          # exception class expected, raise TypeError
           add_code type_error_label.risc_label(compiler)
           type_error = load_object type_error_class
           space = load_object Parfait.object_space
